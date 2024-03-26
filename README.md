@@ -1,6 +1,6 @@
 # Issue 185 details
 
-There is a failing test in datamodel - TestTeamUserRole.java
+There is a failing test in datamodel/ - ```TestTeamUserRole.java```
 
 To build the gradle project:
 > ./gradlew clean build -i
