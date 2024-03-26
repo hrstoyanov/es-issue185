@@ -1,0 +1,31 @@
+
+plugins {
+    id 'issue185.java-library-conventions'
+}
+
+dependencies {
+
+
+    annotationProcessor "org.eclipse.serializer:codegen-wrapping:${eclipseSerializerVersion}"
+    annotationProcessor "org.eclipse.serializer:codegen-entity:${eclipseSerializerVersion}"
+
+    implementation project(':utilities')
+    implementation "org.eclipse.serializer:persistence-binary-jdk8:${eclipseSerializerVersion}"
+    implementation "org.eclipse.serializer:persistence-binary-jdk17:${eclipseSerializerVersion}"
+    implementation "org.eclipse.store:storage-embedded:${eclipseStoreVersion}"
+
+    //JUnit testing
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}
+
+compileJava {
+    options.compilerArgs += [
+            '-Awrapper.types=org.eclipse.serializer.persistence.types.PersistenceStoring',
+            '-Aentity.hashequalator=true',
+            '-Aentity.appendable=true',
+            '-processor', 'org.eclipse.serializer.codegen.wrapping.WrapperProcessor,org.eclipse.serializer.codegen.entity.EntityProcessor'
+    ]
+    options.annotationProcessorPath = configurations.annotationProcessor
+}

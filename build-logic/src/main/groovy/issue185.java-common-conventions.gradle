@@ -1,0 +1,71 @@
+plugins {
+    // Apply the java Plugin to add support for Java.
+    id 'java'
+}
+
+group = 'isue185.webapp'
+version = "${appVersion}"
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+//// Apply a specific Java toolchain to ease working on different environments.
+//java {
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(21)
+//    }
+//}
+//
+//tasks.named('test') {
+//    // Use JUnit Platform for unit tests.
+//    useJUnitPlatform()
+//}
+
+
+// Make sure we use the right java flags
+def javaVersion = JavaVersion.VERSION_21
+
+tasks
+        .withType(JavaCompile)
+        .configureEach {
+            java {
+                sourceCompatibility = javaVersion
+                targetCompatibility = javaVersion
+                options.incremental = true
+                options.encoding = 'UTF-8'
+                options.compilerArgs += [
+                        "--enable-preview",
+ //                       "-Xlint:all",
+                        "-Xlint:unchecked",
+                        "-Xlint:-preview"
+                    ]
+            }
+
+        }
+
+tasks
+        .withType(JavaExec)
+        .configureEach {
+            java {
+                jvmArgs += ["--enable-preview"]
+                sourceCompatibility = javaVersion
+            }
+        }
+
+tasks
+        .withType(Test)
+        .configureEach {
+            //onlyIf {project.hasProperty('EXECUTE_TESTS') || environment.get('EXECUTE_TESTS')!=null}
+            useJUnitPlatform()
+            java {
+                jvmArgs += ["--enable-preview"/*, "-Xmx4g"*/]
+                sourceCompatibility = javaVersion
+            }
+        }
