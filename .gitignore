@@ -1,0 +1,48 @@
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+qodana.yml
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+obj/
+
+
+# VisualStudioCode Patch
+# Ignore all local history of filesÅ
+.history/
+.ionide
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Gradle
+.gradle/
+build/
+
+node_modules/
+stotage/
+
+# Microstream
+storage/
